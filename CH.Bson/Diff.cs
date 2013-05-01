@@ -55,7 +55,6 @@ namespace CH.Bson
         {
             var bson = ProcessDifferencesInDocument(a, b);
 
-
             bson.Add(ProcessFields(a, b));
 
             return bson;
@@ -73,16 +72,14 @@ namespace CH.Bson
         {
             var bson = new BsonDocument();
 
-            if (!a.HasSameElementNamesAs(b))
+            foreach (var e in a.Where(e => !b.Contains(e.Name)))
             {
-                foreach (var e in a.Where(e => !b.Contains(e.Name)))
-                {
-                    bson.SetElement(new BsonElement("+a:" + e.Name, e.Value));
-                }
-                foreach (var e in b.Where(e => !a.Contains(e.Name)))
-                {
-                    bson.SetElement(new BsonElement("+b:" + e.Name, e.Value));
-                }
+                bson.SetElement(new BsonElement("+a:" + e.Name, e.Value));
+            }
+
+            foreach (var e in b.Where(e => !a.Contains(e.Name)))
+            {
+                bson.SetElement(new BsonElement("+b:" + e.Name, e.Value));
             }
 
             return bson;

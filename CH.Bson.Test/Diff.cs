@@ -270,7 +270,7 @@ namespace CH.Bson.Test
 
             var expectedDiff = new BsonDocument
                 {
-                    {"+a:newField", 3},
+                    {"+a:newField", newFieldValue},
                     {
                         existingField, new BsonDocument
                             {
